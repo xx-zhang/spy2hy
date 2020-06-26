@@ -1,0 +1,7 @@
+/collect_static
+/.idea
+__pycache__/
+results/
+/logs
+
+
