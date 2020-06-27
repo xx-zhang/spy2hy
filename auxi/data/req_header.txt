@@ -5,10 +5,8 @@ Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
 Accept-Encoding: gzip, deflate, br
 Content-Type: application/x-www-form-urlencoded; charset=UTF-8
 X-Requested-With: XMLHttpRequest
-Content-Length: 42
+Content-Length: 55
 Origin: https://sc.122.gov.cn
 Connection: keep-alive
 Referer: https://sc.122.gov.cn/
-Cookie: _uab_collina=159322436487323186661115; JSESSIONID-L=95ddef00-e4fc-4c37-b8c6-f6f9c191bbbd
-Pragma: no-cache
-Cache-Control: no-cache
+Cookie: _uab_collina=159322436487323186661115; JSESSIONID-L=c0061313-e0a4-4022-ae8d-8ba77cd3837b
