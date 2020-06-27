@@ -13,91 +13,115 @@ API 解读过程
 import os
 import json
 from requests.api import request
+try:
+    from .logger import Log
+    logging = Log(log_flag='spyder_running_status')
+except:
+    import logging
 
-
-from .config import DEFAULT_HEADER_FILE_PATH as dhfp, DUMP_DATA_DIR
-from .request_tool import ParseReqHeader
-
-default_cookies = {"insert_cookie":"67313298","TS011422ee":"015e99a05db939dccaf56cc4b90a501db4c6a366c045a2341988250ee63ae6cd61670266345ac93771b678106a44a4b09f2508d673","JSESSIONID-L":"980a5ee5-6b75-40d7-8ec3-1b3534262ee3","_uab_collina":"159317921486025403549109"}
-default_headers = {
-          "bodySize": 0,
-          "method": "POST",
-          "url": "https://bj.122.gov.cn/m/syscode/getFeedBackConfig",
-          "httpVersion": "HTTP/1.1",
-          "headers": [
+try:
+    from .config import DUMP_DATA_DIR as dump_data_dir
+except:
+    # TODO 如果本地并没有存储的相关配置，那么默认指定这个。
+    dump_data_dir = 'd://results//'
+# from .request_tool import ParseReqHeader
+try:
+    from .config import firefox_request
+except:
+    firefox_request = {
+        "bodySize": 42,
+        "method": "POST",
+        "url": "https://sc.122.gov.cn/m/viopub/getVioPubList",
+        "httpVersion": "HTTP/1.1",
+        "headers": [
             {
-              "name": "Host",
-              "value": "bj.122.gov.cn"
+                "name": "Host",
+                "value": "sc.122.gov.cn"
             },
             {
-              "name": "User-Agent",
-              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101 Firefox/77.0"
+                "name": "User-Agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101 Firefox/77.0"
             },
             {
-              "name": "Accept",
-              "value": "application/json, text/javascript, */*; q=0.01"
+                "name": "Accept",
+                "value": "application/json, text/javascript, */*; q=0.01"
             },
             {
-              "name": "Accept-Language",
-              "value": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2"
+                "name": "Accept-Language",
+                "value": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2"
             },
             {
-              "name": "Accept-Encoding",
-              "value": "gzip, deflate, br"
+                "name": "Accept-Encoding",
+                "value": "gzip, deflate, br"
             },
             {
-              "name": "X-Requested-With",
-              "value": "XMLHttpRequest"
+                "name": "Content-Type",
+                "value": "application/x-www-form-urlencoded; charset=UTF-8"
             },
             {
-              "name": "Origin",
-              "value": "https://bj.122.gov.cn"
+                "name": "X-Requested-With",
+                "value": "XMLHttpRequest"
             },
             {
-              "name": "Connection",
-              "value": "keep-alive"
+                "name": "Content-Length",
+                "value": "42"
             },
             {
-              "name": "Referer",
-              "value": "https://bj.122.gov.cn/"
+                "name": "Origin",
+                "value": "https://sc.122.gov.cn"
             },
             {
-              "name": "Cookie",
-              "value": "insert_cookie=67313298; TS011422ee=015e99a05db2a64f901e7d789eefb02c76af76e06ed514988521a6811301f27f6912a7cf0d7060c5af4ad5cdc20f03f6e07d0131f0; JSESSIONID-L=980a5ee5-6b75-40d7-8ec3-1b3534262ee3; _uab_collina=159317921486025403549109"
+                "name": "Connection",
+                "value": "keep-alive"
             },
             {
-              "name": "Content-Length",
-              "value": "0"
+                "name": "Referer",
+                "value": "https://sc.122.gov.cn/"
+            },
+            {
+                "name": "Cookie",
+                "value": "_uab_collina=159322436487323186661115; JSESSIONID-L=2ac4380a-e800-44da-bdd7-4401e6dc880b"
             }
-          ],
-          "cookies": [
+        ],
+        "cookies": [
             {
-              "name": "insert_cookie",
-              "value": "67313298"
+                "name": "_uab_collina",
+                "value": "159322436487323186661115"
             },
             {
-              "name": "TS011422ee",
-              "value": "015e99a05db2a64f901e7d789eefb02c76af76e06ed514988521a6811301f27f6912a7cf0d7060c5af4ad5cdc20f03f6e07d0131f0"
-            },
-            {
-              "name": "JSESSIONID-L",
-              "value": "980a5ee5-6b75-40d7-8ec3-1b3534262ee3"
-            },
-            {
-              "name": "_uab_collina",
-              "value": "159317921486025403549109"
+                "name": "JSESSIONID-L",
+                "value": "2ac4380a-e800-44da-bdd7-4401e6dc880b"
             }
-          ],
-          "queryString": [],
-          "headersSize": 711
+        ],
+        "queryString": [],
+        "headersSize": 628,
+        "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+                {
+                    "name": "page",
+                    "value": "2"
+                },
+                {
+                    "name": "size",
+                    "value": "20"
+                },
+                {
+                    "name": "startTime",
+                    "value": ""
+                },
+                {
+                    "name": "endTime",
+                    "value": ""
+                },
+                {
+                    "name": "gsyw",
+                    "value": "01"
+                }
+            ],
+            "text": "page=2&size=20&startTime=&endTime=&gsyw=01"
         }
-
-
-def change_list_2dict(__list):
-    _res = {}
-    for x in __list:
-        _res[x['name']] = x['value']
-    return _res
+    }
 
 
 class ViopubSpyderApiManager():
@@ -107,51 +131,65 @@ class ViopubSpyderApiManager():
         self.vpid = vpid
 
     @staticmethod
-    def fetch_url(method, url=None, data=None, files=None,
-                  headers=None, proxies=None, json=None, cookies=None):
-        if not headers:
-            # headers = ViopubSpyderApiManager.get_header()
-            headers = change_list_2dict(default_headers['headers'])
-        if not cookies:
-            cookies = change_list_2dict(default_headers['cookies'])
-        print(headers)
-        print(url) # https://bj.122.gov.cn/m/viopub/getVioPubDetail
-        print(data)
-        response = request(method=method, url=url,
-                           data=data, files=files, json=json,
-                           headers=headers, proxies=proxies, verify=False,
-                           cookies=cookies)
-        return response
-
+    def write_to_local(json_data, path):
+        _txt = json_data
+        if type(json_data) == dict:
+            _txt = json.dumps(json_data)
+        if not os.path.exists(os.path.dirname(path)):
+            os.makedirs(os.path.dirname(path))
+        with open(path, 'w+', encoding='utf-8') as f:
+            f.write(_txt)
+            f.close()
 
     @staticmethod
-    def get_header(dhfp=dhfp, header_txt=None):
-        if header_txt:
-            return ParseReqHeader().parse1(request_text=header_txt)
-        return ParseReqHeader().parse1(file_path=dhfp)
-
-    def get_detail(self):
-        city_short = self.city_short
-        id = self.vpid
-        _detail_url = "https://{city_short}.122.gov.cn/m/viopub/getVioPubList".format(city_short=city_short)
-
-        # 开始抓取后台接口的URL
-        response = ViopubSpyderApiManager.fetch_url(method='post',
-                                                    url=_detail_url,
-                                                    data={'id': id},
-                                                    )
-        print(response.text)
-
+    def fetch_url(url, method='post', data=None, **kwargs):
+        headers = {x['name']: x['value'] for x in firefox_request['headers']}
+        cookies = {x['name']: x['value'] for x in firefox_request['cookies']}
+        response = request(method=method, url=url,
+                           headers=headers, cookies=cookies,
+                           data=data, timeout=10, )
+        status_code = response.status_code
+        logging.warn('Prepare to Patch URL: {}'.format(url))
+        if status_code != 200:
+            logging.error('Headers Error [{code}] for Server. \n{text}'.format(
+                code=str(status_code), text=response.text))
+            return None
         _res = json.loads(response.text)
-        if int(_res['code']) == 200:
-            print('获取成功')
-        else:
-            print('ERROR!')
-            return False
-        DUMP_FILE_DIR = os.path.join(DUMP_DATA_DIR, city_short)
-        if os.path.exists(DUMP_FILE_DIR):
-            os.makedirs(DUMP_FILE_DIR)
-        with open(DUMP_FILE_DIR, str(id) + '.txt' ) as f:
-            f.write(response.text)
-            f.close()
-        return True
+        _status = _res.get('code')
+        if _status != 200:
+            logging.error('payload Error. {}'.format(response.text))
+            return None
+        return _res
+
+    def get_list(self, page=1, save_local=True):
+        _list_url = "https://{city_short}.122.gov.cn/m/viopub/getVioPubList".format(city_short=self.city_short)
+        data = {"page": page, "size": 20, "startTime": "&", "endTime": "&", "gsyw": "01"}
+        res_data = ViopubSpyderApiManager.fetch_url(url=_list_url, data=data)
+        if not res_data:
+            logging.error('REQUEST_DATA_ERROR: {}'.format(_list_url))
+            return None
+        if save_local:
+            data_dump_dir = os.path.join(dump_data_dir, self.city_short, 'lists')
+            _saved_path = os.path.join(data_dump_dir, 'list_page_{}.txt'.format(str(page)))
+            ViopubSpyderApiManager.write_to_local(json_data=res_data, path=_saved_path)
+        return res_data
+
+    def get_detail(self, save_local=True):
+        _detail_url = "https://{city_short}.122.gov.cn/m/viopub/getVioPubDetail".format(city_short=self.city_short)
+        data = {'id': self.vpid}
+        res_data = ViopubSpyderApiManager.fetch_url(url=_detail_url, data=data)
+        if not res_data:
+            logging.error('REQUEST_DATA_ERROR: {}'.format(_detail_url))
+            return None
+        if save_local:
+            data_dump_dir = os.path.join(dump_data_dir, self.city_short, 'details')
+            _saved_path = os.path.join(data_dump_dir, '{}.txt'.format(str(self.vpid)))
+            ViopubSpyderApiManager.write_to_local(json_data=res_data, path=_saved_path)
+        return res_data
+
+
+if __name__ == '__main__':
+    logging.warning('---------------------')
+    _test = ViopubSpyderApiManager(city_short='hb', vpid='42000210000000373477').get_detail()
+    # _test = ViopubSpyderApiManager(city_short='hb', vpid='42000210000000373477').get_list()
+    logging.warning(_test)

@@ -8,7 +8,10 @@ import os, sys
 sys.path.append('./spy_utils')
 
 
+
 if __name__ == '__main__':
     from spy_utils.spyder import ViopubSpyderApiManager
-    _test = ViopubSpyderApiManager(city_short='bj', vpid='11000210000000478873').get_detail()
-    print(_test)
+
+    _test2 = ViopubSpyderApiManager(city_short='hb', vpid='42000210000000373477').get_detail()
+    _test = ViopubSpyderApiManager(city_short='hb', vpid='42000210000000373477').get_list()
+

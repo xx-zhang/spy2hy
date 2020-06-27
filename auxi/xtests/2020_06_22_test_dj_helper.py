@@ -12,9 +12,7 @@ def django_setup():
     django.setup()
 
 
-
 if __name__ == '__main__':
-    # test002()
-    # push_not_collected_to_sqldb()
-    # test004()
-    dump_all_ets()
+    pass
+
+
